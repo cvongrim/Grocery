@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,12 @@ public class AddGroceryItem extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        // get action bar
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Enabling Up / Back navigation
+       // actionBar.setDisplayHomeAsUpEnabled(true);
 
 
     }

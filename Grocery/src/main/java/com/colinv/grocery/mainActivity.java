@@ -39,8 +39,8 @@ public class mainActivity extends ActionBarActivity{
 
             // Get Grocery List
             db = new DBAdapter(this);
-            //AddContact();
-            GetContacts();
+
+            GetGroceryItems();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -54,19 +54,12 @@ public class mainActivity extends ActionBarActivity{
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
         }
+
+
     }
 
 
-
-    public void AddContact(){
-        db.open();
-        if(db.insertItem("Puddings") >= 0){
-            Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
-        }
-        db.close();
-    }
-
-    public void GetContacts(){
+    public void GetGroceryItems(){
         db.open();
         Cursor c = db.getAllItems();
         data.clear();
@@ -104,9 +97,17 @@ public class mainActivity extends ActionBarActivity{
             case R.id.addGroceryActivity:
                 openAddGroceryActivity();
                 return true;
+            case android.R.id.home:
+                openActivityList();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Load the AddGroceryActivity Fragment
+     */
 
     public void openAddGroceryActivity(){
         AddGroceryItem newFragment = new AddGroceryItem();
@@ -123,7 +124,11 @@ public class mainActivity extends ActionBarActivity{
 
     }
 
-    public void onListItemSaved() {
+    /**
+     * Load the GroceryListActivity Fragment
+     */
+
+    public void openActivityList() {
         // The user selected the headline of an article from the HeadlinesFragment
         // Do something here to display that article
         // Create fragment and give it an argument specifying the article it should show
@@ -135,7 +140,7 @@ public class mainActivity extends ActionBarActivity{
         // Get Grocery List
         db = new DBAdapter(this);
         //AddContact();
-        GetContacts();
+        GetGroceryItems();
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
@@ -154,22 +159,29 @@ public class mainActivity extends ActionBarActivity{
         transaction.commit();
     }
 
-    public void AddContact(View view){
+    public void AddGroceryItemButton(View view){
         addItem();
-        onListItemSaved();
+        openActivityList();
     }
 
     public void addItem(){
-        db = new DBAdapter(this);
-        db.open();
 
         EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
-        String itemName = itemEditText.getText().toString();
 
-        if(db.insertItem(itemName) >= 0){
-            Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
+        if(itemEditText.getText() != null || itemEditText.getText().toString() != ""){
+            String itemName = itemEditText.getText().toString();
+            db = new DBAdapter(this);
+            db.open();
+
+            if(db.insertItem(itemName) >= 0){
+                Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
+            }
+
+            db.close();
+        }else{
+            Toast.makeText(this, "Please enter an item.", Toast.LENGTH_LONG).show();
         }
-        db.close();
+
 
     }
 

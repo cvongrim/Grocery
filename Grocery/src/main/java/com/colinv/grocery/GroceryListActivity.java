@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *  Display Grocery Items
@@ -31,7 +32,10 @@ public class GroceryListActivity extends ListFragment{
     public void onListItemClick(ListView parent, View v, int position, long id){
         TextView groceryTitle = (TextView) v.findViewById(R.id.titleTextView);
         groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-    }
+        groceryTitle.setTextColor(getResources().getColor(R.color.pressed_color));
 
+        //Collections.swap(data, position, 0);
+         //setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.titleTextView, data));
+    }
 
 }
