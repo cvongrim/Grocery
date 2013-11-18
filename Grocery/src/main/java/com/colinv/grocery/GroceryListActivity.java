@@ -19,13 +19,16 @@ public class GroceryListActivity extends ListFragment{
 
 
     ArrayList data = new ArrayList();
+    GroceryListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        data = getArguments().getStringArrayList("groceryList");
-        setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.titleTextView, data));
+        data = getArguments().getParcelableArrayList("groceryList");
+        adapter = new GroceryListAdapter(getActivity(), data);
+        setListAdapter(adapter);
+       // setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.titleTextView, data));
 
     }
 
@@ -35,7 +38,7 @@ public class GroceryListActivity extends ListFragment{
         groceryTitle.setTextColor(getResources().getColor(R.color.pressed_color));
 
         //Collections.swap(data, position, 0);
-         //setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.titleTextView, data));
+        //setListAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_row, R.id.titleTextView, data));
     }
 
 }

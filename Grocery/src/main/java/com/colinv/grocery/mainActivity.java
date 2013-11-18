@@ -2,6 +2,7 @@ package com.colinv.grocery;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class mainActivity extends ActionBarActivity{
 
     DBAdapter db;
-    public ArrayList<String> data = new ArrayList<String>();
+    public ArrayList<GroceryItem> data = new ArrayList<GroceryItem>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class mainActivity extends ActionBarActivity{
             // Intent, pass the Intent's extras to the fragment as arguments
             Bundle args = new Bundle();
 
-            args.putStringArrayList("groceryList", data);
+            args.putParcelableArrayList("groceryList", data);
 
             firstFragment.setArguments(args);
 
@@ -67,7 +68,12 @@ public class mainActivity extends ActionBarActivity{
         if(c.moveToFirst())
         {
             do {
-                data.add(DisplayContact(c));
+                GroceryItem groceryItem = new GroceryItem();
+                groceryItem.setId(displayId(c));
+                groceryItem.setName(displayItemName(c));
+                groceryItem.setIsChecked(displayIsChecked(c));
+
+                data.add(groceryItem);
 
             }while( c.moveToNext());
         }
@@ -75,9 +81,19 @@ public class mainActivity extends ActionBarActivity{
         db.close();
     }
 
-    public String DisplayContact(Cursor c)
+    public Long displayId(Cursor c)
+    {
+        return  c.getLong(0);
+    }
+
+    public String displayItemName(Cursor c)
     {
         return  c.getString(1);
+    }
+
+    public Boolean displayIsChecked(Cursor c)
+    {
+        return  c.getInt(2) > 0;
     }
 
     @Override
@@ -146,7 +162,7 @@ public class mainActivity extends ActionBarActivity{
         // Intent, pass the Intent's extras to the fragment as arguments
         Bundle args = new Bundle();
 
-        args.putStringArrayList("groceryList", data);
+        args.putParcelableArrayList("groceryList", data);
 
         groceryListFragment.setArguments(args);
 
