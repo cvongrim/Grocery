@@ -1,84 +1,64 @@
 package com.colinv.grocery;
-import android.app.ListActivity;
+
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class mainActivity extends ListActivity {
+public class mainActivity extends ActionBarActivity{
 
     DBAdapter db;
-    String[] groceryItems;
-    ArrayList data = new ArrayList();
+    public ArrayList<String> data = new ArrayList<String>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_grocery_list);
 
-        db = new DBAdapter(this);
+        // Check that the activity is using the layout version with
+        // the fragment_container FrameLayout
+        if (findViewById(R.id.fragment_container) != null) {
 
-        // AddContact();
-        GetContacts();
-
-        // TODO: MAKE THIS POPULATE FORM SQL LITE DATABASE
-        /*String[] groceryItems = {
-                "Apples",
-                "Beef",
-                "Rice",
-                "Bread",
-                "Chicken",
-                "Noodles",
-                "Eggs",
-                "Apples",
-                "Beef",
-                "Rice",
-                "Bread",
-                "Chicken",
-                "Noodles",
-                "Eggs",
-                "Apples",
-                "Beef",
-                "Rice",
-                "Bread",
-                "Chicken",
-                "Noodles",
-                "Eggs"
-        };*/
-
-
-       this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_row, R.id.titleTextView, data));
-
-       ListView lv = getListView();
-
-        // listening to single list item on click
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                // TODO: MAKE STRIKE THROUGH TOGGLE
-                TextView groceryTitle = (TextView) view.findViewById(R.id.titleTextView);
-                groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
             }
 
-        });
+            // Create a new Fragment to be placed in the activity layout
+            GroceryListActivity firstFragment = new GroceryListActivity();
 
+            // Get Grocery List
+            db = new DBAdapter(this);
+            //AddContact();
+            GetContacts();
+
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            Bundle args = new Bundle();
+
+            args.putStringArrayList("groceryList", data);
+
+            firstFragment.setArguments(args);
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, firstFragment).commit();
+        }
     }
+
+
 
     public void AddContact(){
         db.open();
@@ -91,11 +71,12 @@ public class mainActivity extends ListActivity {
     public void GetContacts(){
         db.open();
         Cursor c = db.getAllItems();
-        String item;
+        data.clear();
+
         if(c.moveToFirst())
         {
             do {
-               data.add(DisplayContact(c));
+                data.add(DisplayContact(c));
 
             }while( c.moveToNext());
         }
@@ -130,9 +111,67 @@ public class mainActivity extends ListActivity {
     }
 
     public void openAddGroceryActivity(){
-        // TODO: OPEN AddGroceryItem
-        Intent i = new Intent("com.colinv.grocery.AddGroceryItem");
-        startActivity(i);
+        AddGroceryItem newFragment = new AddGroceryItem();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+    }
+
+    public void onListItemSaved() {
+        // The user selected the headline of an article from the HeadlinesFragment
+        // Do something here to display that article
+        // Create fragment and give it an argument specifying the article it should show
+        GroceryListActivity groceryListFragment = new GroceryListActivity();
+
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Get Grocery List
+        db = new DBAdapter(this);
+        //AddContact();
+        GetContacts();
+
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        Bundle args = new Bundle();
+
+        args.putStringArrayList("groceryList", data);
+
+        groceryListFragment.setArguments(args);
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, groceryListFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void AddContact(View view){
+        addItem();
+        onListItemSaved();
+    }
+
+    public void addItem(){
+        db = new DBAdapter(this);
+        db.open();
+
+        EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
+        String itemName = itemEditText.getText().toString();
+
+        if(db.insertItem(itemName) >= 0){
+            Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
+        }
+        db.close();
 
     }
 
