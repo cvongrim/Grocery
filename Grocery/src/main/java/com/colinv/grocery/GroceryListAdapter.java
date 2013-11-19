@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class GroceryListAdapter extends BaseAdapter {
@@ -44,14 +48,24 @@ public class GroceryListAdapter extends BaseAdapter {
         if(convertView==null)
             vi = inflater.inflate(R.layout.list_row, null);
 
-        TextView title = (TextView)vi.findViewById(R.id.titleTextView); // title
+        TextView groceryTitle = (TextView) vi.findViewById(R.id.titleTextView);
 
 
-        GroceryItem groceryItem = new GroceryItem();
+        GroceryItem groceryItem;
         groceryItem = data.get(position);
 
-        // Setting all values in listview
-        title.setText(groceryItem.getName());
+        // Setting all values in listView
+        groceryTitle.setText(groceryItem.getName());
+
+        Log.d("Is Checked:", groceryItem.getIsChecked().toString());
+
+        if(groceryItem.getIsChecked()){
+            groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            groceryTitle.setTextColor(Color.DKGRAY);
+        }else{
+            groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+            groceryTitle.setTextColor(Color.BLACK);
+        }
         //artist.setText(song.get(CustomizedListView.KEY_ARTIST));
 
         return vi;
