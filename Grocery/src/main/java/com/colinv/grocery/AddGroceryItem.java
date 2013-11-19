@@ -1,24 +1,16 @@
 package com.colinv.grocery;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * Add a new item to the grocery list
  */
 public class AddGroceryItem extends Fragment {
-
-    DBAdapter db;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,14 +24,9 @@ public class AddGroceryItem extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // get action bar
+        // get action bar and enable back button
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Enabling Up / Back navigation
-       // actionBar.setDisplayHomeAsUpEnabled(true);
 
 
     }
-
-
 }

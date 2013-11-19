@@ -2,7 +2,6 @@ package com.colinv.grocery;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -180,21 +179,28 @@ public class mainActivity extends ActionBarActivity{
         openActivityList();
     }
 
+
+    // Add Grocery Item to Database
     public void addItem(){
 
         EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
 
+        // Make sure that the field is not empty
         if(itemEditText.getText() != null || itemEditText.getText().toString() != ""){
             String itemName = itemEditText.getText().toString();
+
             db = new DBAdapter(this);
             db.open();
 
+            // Insert the item into the database
             if(db.insertItem(itemName) >= 0){
+                // Show Success message
                 Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
             }
 
             db.close();
         }else{
+            //
             Toast.makeText(this, "Please enter an item.", Toast.LENGTH_LONG).show();
         }
 

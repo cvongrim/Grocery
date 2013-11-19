@@ -16,30 +16,33 @@ public class GroceryItem implements Parcelable {
     // No-arg Ctor
     public GroceryItem(){}
 
-    // all getters and setters go here //...
+    /** Getters */
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Boolean getIsChecked() {
         return is_checked;
+    }
+
+    /** Setters */
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setIsChecked(Boolean is_checked) {
         this.is_checked = is_checked;
     }
+
 
     /** Used to give additional hints on how to process the received parcel.*/
     @Override
