@@ -58,6 +58,91 @@ public class mainActivity extends ActionBarActivity{
 
     }
 
+    /**
+     * Action Bar Code
+     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.grocery_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case R.id.addGroceryActivity:
+                openAddGroceryActivity();
+                //item.setVisible(false);
+                return true;
+            case R.id.clearList:
+                clearGroceryList();
+                return true;
+            case android.R.id.home:
+                openActivityList();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+   // This is the function that the Add buttons on the AddGroceryItem activity calls
+
+    public void AddGroceryItemButton(View view){
+        addItem();
+        openActivityList();
+    }
+
+
+
+
+    /**
+     * Grocery List Functions
+     */
+
+
+    // Clear Grocery List
+    public void clearGroceryList(){
+        db = new DBAdapter(this);
+        db.open();
+        db.deleteAllRows();
+        db.close();
+        openActivityList();
+    }
+
+    // Add Grocery Item to Database
+    public void addItem(){
+
+        EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
+
+        // Make sure that the field is not empty
+        if(itemEditText.getText() != null || itemEditText.getText().toString() != ""){
+            String itemName = itemEditText.getText().toString();
+
+            db = new DBAdapter(this);
+            db.open();
+
+            // Insert the item into the database
+            if(db.insertItem(itemName) >= 0){
+                // Show Success message
+                Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
+            }
+
+            db.close();
+        }else{
+            //
+            Toast.makeText(this, "Please enter an item.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /** Populate the data so we can build our list */
 
     public void GetGroceryItems(){
         db.open();
@@ -95,53 +180,11 @@ public class mainActivity extends ActionBarActivity{
         return  c.getInt(2) > 0;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.grocery_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.addGroceryActivity:
-                openAddGroceryActivity();
-                return true;
-            case android.R.id.home:
-                openActivityList();
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Load the AddGroceryActivity Fragment
+     /**
+     * FRAGMENTS
      */
-
-    public void openAddGroceryActivity(){
-        AddGroceryItem newFragment = new AddGroceryItem();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-
-    }
-
-    /**
-     * Load the GroceryListActivity Fragment
-     */
+    /** Load the GroceryListActivity Fragment */
 
     public void openActivityList() {
         // The user selected the headline of an article from the HeadlinesFragment
@@ -172,39 +215,24 @@ public class mainActivity extends ActionBarActivity{
 
         // Commit the transaction
         transaction.commit();
+
+        // get action bar and enable back button
+        this.getActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
-    public void AddGroceryItemButton(View view){
-        addItem();
-        openActivityList();
-    }
+    /** Load the AddGroceryActivity Fragment */
+    public void openAddGroceryActivity(){
+        AddGroceryItem newFragment = new AddGroceryItem();
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-    // Add Grocery Item to Database
-    public void addItem(){
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
 
-        EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
-
-        // Make sure that the field is not empty
-        if(itemEditText.getText() != null || itemEditText.getText().toString() != ""){
-            String itemName = itemEditText.getText().toString();
-
-            db = new DBAdapter(this);
-            db.open();
-
-            // Insert the item into the database
-            if(db.insertItem(itemName) >= 0){
-                // Show Success message
-                Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
-            }
-
-            db.close();
-        }else{
-            //
-            Toast.makeText(this, "Please enter an item.", Toast.LENGTH_LONG).show();
-        }
-
+        // Commit the transaction
+        transaction.commit();
 
     }
-
 }

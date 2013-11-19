@@ -4,11 +4,12 @@
     android:id="@+id/groceryRowRelativeLayout"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="@android:color/white">
+    android:background="@drawable/borders"
+    >
     <TextView android:id="@+id/titleTextView"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Placeholder"
+        android:text="@string/placeholder"
         android:textColor="@android:color/black"
         android:padding="5dp"
         android:textIsSelectable="false"

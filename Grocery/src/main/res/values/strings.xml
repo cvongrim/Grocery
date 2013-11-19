@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Grocery+</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_add_item">Add</string>
-
+    <string name="add">Add</string>
+    <string name="clear_list">Clear List</string>
+    <string name="item_name">Item Name</string>
+    <string name="placeholder">Placeholder</string>
 </resources>

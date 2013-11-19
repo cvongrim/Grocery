@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Item Name"
+        android:text="@string/item_name"
         android:textColor="@android:color/black"
         android:id="@+id/itemLabelTextView"
         android:layout_marginLeft="30dp"
@@ -22,16 +22,17 @@
         android:textColor="@android:color/black"
         android:id="@+id/itemEditText"
         android:layout_below="@+id/itemLabelTextView"
-        android:layout_centerHorizontal="true"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:enabled="false"
+        android:autoText="false" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add"
         android:id="@+id/addButton"
-        android:layout_alignParentBottom="true"
+        android:onClick="AddGroceryItemButton"
+        android:layout_below="@+id/itemEditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="109dp"
-        android:onClick="AddGroceryItemButton"/>
+        android:layout_marginTop="34dp" />
 </RelativeLayout>

@@ -117,6 +117,10 @@ public class DBAdapter {
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
 
+    //--delete and recreate table
+    public boolean deleteAllRows(){
+        return db.delete(DATABASE_TABLE, null , null) > 0;
+    }
 
 
 }
