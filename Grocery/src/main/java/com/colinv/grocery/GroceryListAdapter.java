@@ -59,7 +59,7 @@ public class GroceryListAdapter extends BaseAdapter {
 
         if(groceryItem.getIsChecked()){
             groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            groceryTitle.setTextColor(Color.DKGRAY);
+            groceryTitle.setTextColor(Color.GRAY);
         }else{
             groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
             groceryTitle.setTextColor(Color.BLACK);

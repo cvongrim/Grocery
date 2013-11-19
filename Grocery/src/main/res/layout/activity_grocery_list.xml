@@ -9,7 +9,6 @@
     <Fragment
         android:name="com.colinv.grocery.GroceryListActivity"
         android:id="@+id/groceryListView"
-        android:background="@drawable/bg_key"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

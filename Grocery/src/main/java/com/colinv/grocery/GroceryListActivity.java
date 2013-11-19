@@ -60,7 +60,7 @@ public class GroceryListActivity extends ListFragment{
         } else {
             db.updateItem(groceryItem.getId(), groceryItem.getName(), true);
             groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            groceryTitle.setTextColor(Color.DKGRAY);
+            groceryTitle.setTextColor(Color.GRAY);
 
         }
                 db.close();

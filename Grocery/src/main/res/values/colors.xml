@@ -2,4 +2,5 @@
 <resources>
     <color name="pressed_color">#ff999999</color>
     <color name="default_color">#ffffff</color>
+    <color name="pressed_example">#CC99CC00</color>
 </resources>
