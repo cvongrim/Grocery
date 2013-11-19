@@ -47,13 +47,14 @@ public class GroceryListAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.list_row, null);
 
         TextView groceryTitle = (TextView) vi.findViewById(R.id.titleTextView);
-
+        TextView groceryQuantity = (TextView) vi.findViewById(R.id.quantityTextView);
 
         GroceryItem groceryItem;
         groceryItem = data.get(position);
 
         // Setting all values in listView
         groceryTitle.setText(groceryItem.getName());
+        groceryQuantity.setText(groceryItem.getQuantity());
 
         Log.d("Is Checked:", groceryItem.getIsChecked().toString());
 

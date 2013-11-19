@@ -1,38 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/white">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:padding="15dp"
+    android:stretchColumns="*">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/item_name"
-        android:textColor="@android:color/black"
-        android:id="@+id/itemLabelTextView"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="27dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
 
-    <EditText
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/item_name"
+            android:textColor="@android:color/black"
+            android:id="@+id/itemLabelTextView"
+            android:layout_gravity="center_vertical"
+            />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_span="3"
+            android:inputType="textAutoComplete"
+            android:textColor="@android:color/black"
+            android:id="@+id/itemEditText"
+            android:singleLine="true"
+             />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/item_quantity"
+            android:textColor="@android:color/black"
+            android:id="@+id/quantityLabelTextView"
+            android:layout_gravity="center_vertical"
+            />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_span="3"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:id="@+id/quantityEditText"
+            android:singleLine="true"
+            />
+    </TableRow>
+
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:id="@+id/itemEditText"
-        android:layout_below="@+id/itemLabelTextView"
-        android:singleLine="false"
-        android:enabled="false"
-        android:autoText="false" />
+        android:layout_marginTop="25dp"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:id="@+id/addButton"
+            android:layout_gravity="center"
+            android:layout_span="4"
+            android:onClick="AddGroceryItemButton"
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:id="@+id/addButton"
-        android:onClick="AddGroceryItemButton"
-        android:layout_below="@+id/itemEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
-</RelativeLayout>
+             />
+    </TableRow>
+</TableLayout>
+

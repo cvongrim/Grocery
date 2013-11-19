@@ -11,6 +11,7 @@ public class GroceryItem implements Parcelable {
 
     private Long id;
     private String name;
+    private String quantity;
     private Boolean is_checked;
 
     // No-arg Ctor
@@ -25,6 +26,10 @@ public class GroceryItem implements Parcelable {
         return name;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
     public Boolean getIsChecked() {
         return is_checked;
     }
@@ -37,6 +42,10 @@ public class GroceryItem implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public void setIsChecked(Boolean is_checked) {
@@ -55,6 +64,7 @@ public class GroceryItem implements Parcelable {
     public void writeToParcel(Parcel pc, int flags) {
         pc.writeLong(id);
         pc.writeString(name);
+        pc.writeString(quantity);
         pc.writeInt( is_checked ? 1 :0 );
     }
 
@@ -71,7 +81,8 @@ public class GroceryItem implements Parcelable {
     /**Ctor from Parcel, reads back fields IN THE ORDER they were written */
     public GroceryItem(Parcel pc){
         id         = pc.readLong();
-        name        =  pc.readString();
+        name       =  pc.readString();
+        quantity   =  pc.readString();
         is_checked = ( pc.readInt() == 1 );
     }
 }

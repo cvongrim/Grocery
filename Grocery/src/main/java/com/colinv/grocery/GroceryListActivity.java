@@ -53,12 +53,12 @@ public class GroceryListActivity extends ListFragment{
 
 
         if (groceryItem.getIsChecked()) {
-            db.updateItem(groceryItem.getId(), groceryItem.getName(), false);
+            db.updateItem(groceryItem.getId(), groceryItem.getName(), groceryItem.getQuantity(), false);
             groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
             groceryTitle.setTextColor(Color.BLACK);
 
         } else {
-            db.updateItem(groceryItem.getId(), groceryItem.getName(), true);
+            db.updateItem(groceryItem.getId(), groceryItem.getName(), groceryItem.getQuantity(), true);
             groceryTitle.setPaintFlags(groceryTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             groceryTitle.setTextColor(Color.GRAY);
 

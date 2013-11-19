@@ -121,16 +121,18 @@ public class mainActivity extends ActionBarActivity{
     public void addItem(){
 
         EditText itemEditText = (EditText) findViewById(R.id.itemEditText);
+        EditText quantityEditText = (EditText) findViewById(R.id.quantityEditText);
 
         // Make sure that the field is not empty
         if(itemEditText.getText() != null || itemEditText.getText().toString() != ""){
             String itemName = itemEditText.getText().toString();
+            String itemQuantity = quantityEditText.getText().toString();
 
             db = new DBAdapter(this);
             db.open();
 
             // Insert the item into the database
-            if(db.insertItem(itemName) >= 0){
+            if(db.insertItem(itemName, itemQuantity) >= 0){
                 // Show Success message
                 Toast.makeText(this, "Add successful.", Toast.LENGTH_LONG).show();
             }
@@ -155,6 +157,7 @@ public class mainActivity extends ActionBarActivity{
                 GroceryItem groceryItem = new GroceryItem();
                 groceryItem.setId(displayId(c));
                 groceryItem.setName(displayItemName(c));
+                groceryItem.setQuantity(displayItemQuantity(c));
                 groceryItem.setIsChecked(displayIsChecked(c));
 
                 data.add(groceryItem);
@@ -175,9 +178,14 @@ public class mainActivity extends ActionBarActivity{
         return  c.getString(1);
     }
 
+    public String displayItemQuantity(Cursor c)
+    {
+        return  c.getString(2);
+    }
+
     public Boolean displayIsChecked(Cursor c)
     {
-        return  c.getInt(2) > 0;
+        return  c.getInt(3) > 0;
     }
 
 
